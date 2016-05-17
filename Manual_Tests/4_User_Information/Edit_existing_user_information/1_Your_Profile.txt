@@ -1,0 +1,10 @@
+*** Test Cases ***
+Validate personal information
+    [Documentation]  This test case tests editing the user's personal information on the Your Profile page.
+    [Tags]  Manual
+    Step 1  a) Go to the Login page:  URL = http://ai.iplantcollaborative.org/dashboard  b) Log in.
+    Step 2  a) Click Your Profile.  b) Verify the Your Profile page opens.
+    Step 3  Verify that the Personal Information required fields are populated with the user's data:  - First name  - Last name  - State/Province  - Country
+    Step 4  Verify that the required Contact information is populated:  - Email
+    Step 5  Verify that the Institutional Information required fields are populated:  - Company or Institution  - Your Position  - Your Department
+

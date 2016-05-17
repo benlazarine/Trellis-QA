@@ -1,0 +1,8 @@
+*** Test Cases ***
+Edit country
+    [Documentation]  This test case tests for editing the country code.
+    [Tags]  Manual
+    Step 1  Verify all required fields are completed.
+    Step 2  a) In the Country field, change the selection to Choose One.  b) Click Update.  c) Verify the message "Please select an item in the list" is displayed under the Country field and a red box encircles the field.
+    Step 3  a) Select United States.  b) Click Update.  c) Verify the message "Your profile was successfully updated" is displayed.
+

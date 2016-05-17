@@ -1,0 +1,330 @@
+*** Settings ***
+Documentation     This test verifies the default landing page, the associated links, Login screen and the information on the page.
+Suite Teardown    Close All Browsers
+Test Timeout      1 minute
+Library           Selenium2Library    5s    run_on_failure=Trellis Run On Failure
+Resource          ../Trellis_Vars-2.0.txt
+Resource          ../Trellis_GUI.robot
+
+*** Test Cases ***
+Open Home Page
+    [Tags]    GUI    smoke
+    Comment    Set the default selenium timeout
+    Set Selenium Timeout    60s
+    Comment    Open Browser and go to site
+    Open Browser    ${WebHost}    ${Browser}    ${BrowserAlias}
+    Comment    Open the browser fullscreen.
+    Maximize Browser Window
+    Comment    Wait until we see the default landing page
+    Wait Until Page Contains Element    css=input[value='Log in to iPlant']    ${GUIWaitShort}
+
+###Header###
+Verify Logo link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Comment    The following is the link attached to the logo image.
+    Page Should Contain Element    css=#logo-container
+    ${URI}=    Get Element Attribute    dom=document.getElementById('logo-container')@baseURI
+    Should Be Equal As Strings    ${URI}    http://${WebHost}
+
+Verify Logo image
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Comment    The following is the logo image.
+    Page Should Contain Element    css=img[alt='iPlant Collaborative']
+
+Verify Logo name
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Comment    The following is the logo name.
+    Page Should Contain Element    xpath=//em[text()='iPlant Collaborative']
+
+Verify Trellis Home button
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//span[text()='Home']
+
+Verify Applications link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[href='applications.html']
+
+Verify Groups link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[href='groups.html']
+
+Verify Account link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[href='account.html']
+
+Verify Contact dropdown
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=#help-popover
+
+Verify Log In link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//a[text()='Log In']
+
+Verify Search iPlant field
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=#top-menu-search>input[type='text'][placeholder='Search iPlant'][name='search']
+
+###Contact Form###
+Open Contact dropdown
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Click Element    css=#help-popover
+    Wait Until Page Contains Element    css=input[value='Send Message']    ${GUIWaitShort}
+
+Verify Ask iPlant box - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Comment    This verifies the Check Ask iPlant box.
+    Page Should Contain Element    css=p[class='alert']
+
+Verify Ask iPlant box text - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Check Ask iPlant for answers to common questions and technical issues!
+
+Verify Ask iPlant link - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[href='https://ask.iplantcollaborative.org']
+
+Verify Email Address field - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=input[placeholder='Your Email Address']
+
+Verify Message field - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=textarea[placeholder='Your Message']
+
+Verify Technical Support radial - Contact
+    [Tags]    GUI    smoke    
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//label[@class='radio'][text()=' Send to Technical Support team.']
+
+Verify iPlant General radial - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//label[@class='radio'][text()=' Send to iPlant general.']
+
+Verify Send Mail button - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=input[value='Send Message']
+
+Verify Cancel button - Contact
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//a[text()='Cancel']
+
+Close Contact dropdown
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Click Element    css=#help-popover
+    Sleep    0.5s    #Needed to allow dropdown to finish closing.
+    Capture Page Screenshot
+
+###iPlant Hero Section###
+Verify iPlant Hero section
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=div[class='iplant-hero']
+
+Verify Banner text
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Streamline your scientific analysis
+
+Verify Sub-banner text
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    iPlant makes it easy to apply modern, powerful tools and technologies to your life science research.
+
+Verify Data Store
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Securely store your large-scale data and access it from any application
+
+Verify Discovery Environment
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Run 300+ popular bioinformatics tools and workflows
+
+Verify Tool Integration
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Use a graphical user interface or the command line for most tools
+
+Verify Atmosphere
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Develop in a customized work environment or use one that's pre-configured
+
+Verify iPlant API
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Integrate iPlant services into your own application using iPlant's powerful APIs
+
+Verify Get the Details
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Get the Details
+
+Verify Get Started Now button
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[href='signup.html']
+
+###Featured Applications###
+Verify Featured Applications text
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Featured Applications
+
+Verify View All Apps link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link   View All Apps
+
+Verify Atmosphere link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Atmosphere
+
+Verify Atmosphere description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Create a customized scientific platform in the cloud, or use one that is ready-made for your area of interest.
+
+Verify Discovery Environment link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Discovery Environment
+
+Verify Discovery Environment description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Use more than 300+ popular bioinformatics tools, workflows, and analyses.
+
+Verify Taxanomic Name Resolution link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Taxanomic Name Resolution
+
+Verify Taxanomic Name Resolution description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Standardize plant names in your research and publications against four major taxanomic sources.
+
+Verify DNA Subway link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    DNA Subway
+
+Verify DNA Subway description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Ride DNA Subway for high-level genome analysis or use it to teach genomics to your students.
+
+Verify Data Store link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Data Store
+
+Verify Data Store description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Store and access large datasets for analysis quickly and easily.
+
+Verify My-Plant link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link   My-Plant
+
+Verify My-Plant description
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Connect with scientists doing similar research, share datasets, virtual machines, and other iPlant resources. 
+
+###Login Section###
+Verify Login section
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    xpath=//h3[text()='Log in to iPlant']
+
+Verify Get an iPlant ID link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Get an iPlant ID
+
+Verify Forgot your Password link 
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link    Forgot your password?
+
+###Social Media Links###
+Verify Connect with iPlant text
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Connect with iPlant
+
+Verify iPlant link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[class='social-media-link'][href='http://www.iplantcollaborative.org']
+
+Verify Facebook link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[class='social-media-link'][href='https://www.facebook.com/iPlantC']
+
+Verify Google+ link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[class='social-media-link'][href='https://plus.google.com/104833377536822161968/posts']
+
+Verify Youtube link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[class='social-media-link'][href='http://www.youtube.com/user/iPlantCollaborative']
+
+Verify Twitter link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Element    css=a[class='social-media-link'][href='https://twitter.com/iplantcollab']
+
+Verify Version/Copyright text
+    [Tags]    GUI    smoke    skipped
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    Trellis 1.1.1; © Copyright 2013 by iPlant Collaborative
+
+###Footer###
+Verify Attribution
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain    The iPlant Collaborative is funded by a grant from the National Science Foundation Plant Cyberinfrastructure Program (#DBI-0735191).
+
+Verify iPlant Website Link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link   iPlant Website
+
+Verify Ask iPlant Link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link   Ask iPlant
+
+Verify iPlant Wiki Link
+    [Tags]    GUI    smoke
+    Switch Browser    ${BrowserAlias}
+    Page Should Contain Link   iPlant Wiki

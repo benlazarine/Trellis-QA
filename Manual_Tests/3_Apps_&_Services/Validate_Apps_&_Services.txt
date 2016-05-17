@@ -1,0 +1,29 @@
+*** Test Cases ***
+Verify GUI elements
+    [Documentation]  This test verifies the GUI for the Apps & Services list.
+    [Tags]  Manual
+    Step 1  a) Log in to Trellis.  b) If necessary, click the Apps & Services tab.  c) Verify three links are displayed at the top:  - My Services  - Pending Service Requests  - Available Services
+    Step 2  a) In each of the three sections, verify a ? icon is displayed next to the service category.  b) Hover over each type and verify a description of the service category is displayed.
+    Step 3  Click the My Services link at the top:  a) Verify only the services for My Services are listed.  b) Verify the number of services listed matches the number shown next to the link.
+    Step 4  Click the Pending Service Requests link:  a) Verify only the services for Pending Service Requests are listed.  b) Verify the number of services listed matches the number shown next to the link.
+    Step 6  Click the Available Services link:  a) Verify only the services for Available Services are listed.  b) Verify the number of services listed matches the number shown next to the link.
+    Step 7  Verify each service has:  a) Icon to the left of the name.  b) Description in the middle column.  c) Links on the right: Go to, Email the maintainer, User Manual  d) Save the file (Jabot File > Save).
+
+Verify Apps & Services
+    [Documentation]  This test case tests the Apps & Services tab.
+    [Tags]  Manual
+    Step 1  Verify the My Services section contains the following services:  NOTE: This list may vary depending on which services you already have access to.  - Atmosphere, Bug and Issue Tracking, Discover Environment, iPlant Data Store, My-Plant, TNRS, Wiki
+    Step 2  Verify the Available Services section contains the following services:  NOTE: This list may vary depending on which services you have already added to your My Services list.  - BISQUE  - CoGe  - DNA Subway  - Integrated Breeding Platform  - TARGeT
+    ...  - Testing Service
+    Step 3  a) In the Available Services list, click Request Access on the Testing Service service.  b) Verify Testing Service is no longer listed in the Available Services section.  c) Verify Testing Service is now listed in the Pending Requests for Services section with a Request Status of Pending.  d) Save the file (Jabot File > Save).
+
+Verify My Services
+    [Documentation]  This test case validates the My Services GUI.
+    [Tags]  Manual
+    Step 1  In the My Services list, click the icon to the left of the first service.  b) Verify the application opens.  c) Repeat for each icon in the My Services list.  d) Close the service.
+    Step 2  a) Click the name link for the first service.  b) Verify the application opens.  c) Repeat for each icon in the My Services list.  d) Close the service.
+    Step 3  a) Click each "Go to" link for the first service.  b) Verify the application opens.  c) Repeat for each icon in the My Services list.  d) Close the service.
+    Step 4  a) Click the Email the maintainer icon for the first service.  b) Verify the email form opens with support@iplantinitiative.org in the To box.  c) Repeat for each icon in all three lists.  d) Close the email.
+    Step 5  a) Click the User Manual link for the first service.  b) Verify the Help instructions for the service open.  c) Repeat for each icon in all three lists.  d) Close the service.
+    Step 6  a) In the Available Services lists, click Request Access for the Testing Service service.  b) Refresh the page.  c) Verify the Request Status shows Pending.  d) Save the file (Jabot File > Save).  NOTE: When the maintainer grants access, the user SHOULD receive notification. This is not yet in place (12-7-11).
+

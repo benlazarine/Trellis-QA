@@ -1,0 +1,10 @@
+#  Test Suite list for running full regression minus the "skipped" tests
+#  Change the title of the test results
+#--name API
+
+# ------------- API Tests start here --------------------
+# Trellis testsuites
+API/API_v1_Endpoint_Tests.robot
+#API/API_v2_Endpoint_Tests.robot
+
+####

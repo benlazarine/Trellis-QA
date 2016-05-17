@@ -1,0 +1,3 @@
+*** Settings ***
+Documentation   This test suite tests creating a new user and editing user information for an existing user.
+

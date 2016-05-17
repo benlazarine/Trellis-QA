@@ -1,0 +1,26 @@
+*** Settings ***
+Documentation   This test suite tests the Login page.
+
+*** Test Cases ***
+Verify landing page
+    [Documentation]  This test case verifies UI and functionality for the Trellis landing page (ai.iplantcollaborative.org/security/logged-out).
+    [Tags]  Manual
+    Step 1  a) If necessary, go to the Trellis landing page:  URL = ai.iplantcollaborative.org/security/logged-out
+    Step 2  a) Verify New User is displayed.  b) Verify the Register button is displayed.
+    Step 3  a) Verify the Log in With section is displayed.  b) Verify the iPlant Username button is displayed.  c) Verify the InCommon button is displayed.
+    Step 4  Verify the legalese copy is displayed:  Legalese = (c) Copyright 2011 by iPlant Collaborative.
+
+Verify Login page, existing user
+    [Documentation]  This test case tests the Login page for an existing user.
+    [Tags]  Manual
+    Step 1  a) On the landing page, click Login at the top right.  b) Verify the iPlant Authentication Service page opens:  URL = https://auth.iplantcollaborative.org/cas/login?service=http://ai.iplantcollaborative.org/security/authenticate  c) Click Logout.
+    Step 2  a) Enter your iPlant ID.  b) Enter your password.  c) Click Clear.  d) Verify the form clears.
+    Step 3  a) Click Need to reset your password?  b) Verify the ??? window opens.  Expected failure: Link broken
+    Step 4  a) Click Contact Support.  b) Verify the ??? window opens.  Expected failure: Link broken
+    Step 5  a) Enter your iPlant ID.  b) Enter your password.  c) Click Login.  d) Verify the Your Profile/Reset Password form opens.  e) Save the file (Jabot File > Save).
+
+Enter Invalid login
+    [Documentation]  This test case tests for invalid username and password.
+    [Tags]  Manual
+    Step 1  a) Go to the iPlant Authentication Service page:  URL = https://auth.iplantcollaborative.org/cas/login?service=http://ai.iplantcollaborative.org/security/authenticate  b) In the iPlant ID field, enter an invalid username.  c) In the Password field, enter an invalid password.  c) Click the LOGIN button.  d) Verify an error is near the top of the page and says "The credentials you provided cannot be determined to be authentic"  e) Save the file (Jabot File > Save).
+

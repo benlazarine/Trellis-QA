@@ -1,0 +1,10 @@
+*** Test Cases ***
+Edit state province
+    [Documentation]  This test case tests adding and editing the state/province for a new and existing user.
+    [Tags]  Manual
+    Step 1  Verify all required fields are completed.
+    Step 2  a) In the State field, enter "A".  b) Click Update.  c) Verify the message "Please match the requested format" is displayed.
+    Step 3  a) Still in the State field, enter "!" and click Update.  b) Verify the message "Please match the requested format" is displayed.
+    Step 4  a) Now enter "A1" and click Update.  b) Verify the message "Please match the requested format" is displayed.  Expected failure; entered USERMAN-16 (12-5-11)
+    Step 5  a) Still in the State field, enter "AZ".  b) Click Update.  c) Verify the message "Your profile was successfully updated" is displayed.
+

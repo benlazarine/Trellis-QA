@@ -1,0 +1,13 @@
+*** Settings ***
+Documentation   This test suite tests the Trellis framework page (what's on every form and window).
+
+*** Test Cases ***
+Verify username and status
+    [Documentation]  This test case tests the username and status.\n\nPrerequisites:\n- User must be logged in.
+    [Tags]  Manual
+    Step 1  a) In the INFO field below, enter the browser and version number you are using, followed by a period. Example: Firefox 8.0.  b) Enter today's date, followed by a period.  c) Enter your name, followed by a period. Example: Kathleen.
+    Step 2  a) Save the file (Jabot File > Save).  b) Enter the file name, starting with the month+day, then browser, then your initials:  Example: July29_FF50_KK.xml
+    Step 3  Log in to Trellis as a valid user.  User = IPCTEST  URL = ai.iplantcollaborative.org/security/logged-out
+    Step 4  a) Verify that the displayed Logged-in name is correct.  b) Verify that the status shows Logout.
+    Step 5  a) Verify two tabs are shown:  Tab 1 = Apps & Services  Tab 2 = Your Profile  b) Save the file (Jabot File > Save).
+

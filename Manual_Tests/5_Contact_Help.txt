@@ -1,0 +1,11 @@
+*** Test Cases ***
+Submit Help Request
+    [Documentation]  This test case tests entering and submitting a Help request.
+    [Tags]  Manual
+    Step 1  a) In the Trellis application, click Contact on the left.  b) Verify the Help Request form opens.
+    Step 2  a) Verify the user's email address is populated in the Email field.  b) Verify the Body text box is empty.  c) Verify the window displays a Send Help button.
+    Step 3  a) Enter something with a note that you are testing for QA.  b) Enter a bunch of text (doesn't matter what) to verify that a vertical scrollbar is displayed when the text exceeds the window size.  c) Click Send Help.
+    Step 4  Verify you receive an acknowledgement email from Core Services about the request.
+    Step 5  a) Open the iPlant Authentication Service page:  URL = https://auth.iplantcollaborative.org/cas/login?service=http://ai.iplantcollaborative.org/security/authenticate  b) Click the link for Contact Support.  c) Verify the ??? page opens.  Expected failure. Bug logged.
+    Step 6  a) Save the file (Jabot File > Save).
+

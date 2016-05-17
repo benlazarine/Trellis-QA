@@ -1,0 +1,7 @@
+*** Test Cases ***
+Log out
+    [Documentation]  This test case tests logging out of Trellis.
+    [Tags]  Manual
+    Step 1  a) As a logged-in user on the Your Profile page, click Logout.  b) Verify that "You have been logged out" is displayed on the home page.
+    Step 2  a) Save the file (Jabot File > Save).
+

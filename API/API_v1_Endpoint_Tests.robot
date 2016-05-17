@@ -1,0 +1,164 @@
+*** Settings ***
+Library           OperatingSystem
+Resource          ../Trellis_Vars.robot
+
+*** Test Cases ***
+Search by Username
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rbovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
+    Should Contain    ${output}    "firstname": "Rob"
+    Should Contain    ${output}    "lastname": "Bovill"
+
+Search by email
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rbovill@iplantcollaborative.org
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/email/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
+    Should Contain    ${output}    "firstname": "Rob"
+    Should Contain    ${output}    "lastname": "Bovill"
+
+Search by Name - Single
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    bovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/name/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
+    Should Contain    ${output}    "firstname": "Rob"
+    Should Contain    ${output}    "lastname": "Bovill"
+    Should Contain    ${output}    "email": "rbovill+001@gmail.com"
+    Should Contain    ${output}    "firstname": "RobOOl"
+
+Search by Name - Multipart Plus Sign
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rob+bovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    ${LineCount} =    Run    echo '${output}' | wc -l
+    Log    ${LineCount}
+    Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
+    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
+    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+
+Search by Name - Multipart Space URL Encoded
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rob%20bovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    ${LineCount} =    Run    echo '${output}' | wc -l
+    Log    ${LineCount}
+    Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
+    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
+    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+
+Search by Name - Multipart Actual Space
+    [Tags]    functional    skipped
+    ${SearchValue} =    Set Variable    rob bovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    ${LineCount} =    Run    echo '${output}' | wc -l
+    Log    ${LineCount}
+    Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
+    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
+    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+
+Search by email - 2 char
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rb
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/email/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error": {
+    Should Contain    ${output}    "Validation": "Search terms must have at least 3 characters"
+
+Search by Username - 2 char
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rb
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error": {
+    Should Contain    ${output}    "Validation": "Search terms must have at least 3 characters"
+
+Search by Name - 2 char
+    [Tags]    functional
+    ${SearchValue} =    Set Variable    rb
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/name/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error": {
+    Should Contain    ${output}    "Validation": "Search terms must have at least 3 characters"
+
+Add a Service - First
+    [Documentation]    Currently a service can only be added once. \ Will have to get something to clear services for a specific user and then we can add more in. \ Until then, this is tagged to be skipped.
+    [Tags]    functional    USERMAN-100
+    ${ServiceName} =    Set Variable    coge
+    ${output} =    Run    curl -s -X POST -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/service/${ServiceName}/add/${UserName} | python -mjson.tool
+    Log    ${output}
+    Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
+    Should Not Contain    ${output}    "error": {
+    Should Contain    ${output}    "service":
+    Should Contain    ${output}    ["Request to add ${ServiceName} to ${UserName}'s account was successful."]
+
+Add a Service - Multiple
+    [Tags]    functional
+    ${ServiceName} =    Set Variable    coge
+    ${output} =    Run    curl -s -X POST -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/service/${ServiceName}/add/${UserName} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error": {
+    Should Contain    ${output}    "LogicException": "\\r\\n
+    Should Contain    ${output}    User ipctest already has requested coge.\\r\\n
+    Should Contain    ${output}    Multiple requests not permitted for the same service.\\r\\n
+
+Method Not Supported
+    [Documentation]    The response is supposed to be in JSON format as below but currently is not working that way.
+    ...
+    ...    Invalid HTTP method: Method not supported
+    ...    {"error: {"HTTP": "Method not supported; only GET requests are accepted"}}
+    [Tags]    functional
+    ${MethodName} =    Set Variable    FooBar
+    ${SearchValue} =    Set Variable    rbovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/${MethodName}/username/${SearchValue}
+    Log    ${output}
+    Should Contain    ${output}    We are sorry, but something went terribly wrong: No route found for "GET /api/v1/FooBar/username/rbovill"
+
+Authentication Error
+    [Tags]    functional
+    ${PubKey} =    Set Variable    9999999999
+    ${SearchValue} =    Set Variable    rbovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error":
+    Should Contain    ${output}    "Auth": "Invalid API Key"
+
+Invalid Secret Error
+    [Tags]    functional
+    ${PrivKey} =    Set Variable    9999999999
+    ${SearchValue} =    Set Variable    rbovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error":
+    Should Contain    ${output}    "Auth": "Invalid API Secret"
+
+Unrecognized API Client
+    [Documentation]    This test isn't complete yet. \ Need to use valid keys for different IP addresses, but not the one for the machine it is running on.
+    [Tags]    functional    skipped
+    ${PubKey} =    Set Variable    9999999999
+    ${PubKey} =    Set Variable    9999999999
+    ${SearchValue} =    Set Variable    rbovill
+    ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
+    Log    ${output}
+    Should Contain    ${output}    "error":
+    Should Contain    ${output}    "Auth": "Unrecognized API Client"

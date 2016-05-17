@@ -1,0 +1,8 @@
+*** Test Cases ***
+Edit email address
+    [Documentation]  This test case tests editing an email address.
+    [Tags]  Manual
+    Step 1  Verify all required fields are completed.
+    Step 2  a) In the Email field, enter a fake/incomplete email address:  Example: 123456  b) Click Update.  Expected failure: Allowing incomplete/ invalid email addresses. Entered USERMAN-17 on 12-5-11.  c) Verify the message, "Please match the required format" is displayed.
+    Step 3  a) Still in the Email field, enter a valid email address.  b) Click Update.  c) Verify the message "Your profile was successfully updated" is displayed.
+

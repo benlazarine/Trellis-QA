@@ -1,0 +1,30 @@
+*** Settings ***
+Documentation   This test suite tests creating a new user.
+
+*** Test Cases ***
+Open Register page (new account)
+    [Documentation]  This test case tests opening the Register page in order to create a new user.
+    [Tags]  Manual
+    Step 1  a) If necessary, log out of Trellis.  b) Go to the Trellis landing page:  URL = ai.iplantcollaborative.org/security/logged-out
+    Step 2  a) Click Register.  b) Verify the register page opens:  URL = http://ai.iplantcollaborative.org/register/  c) Verify only the Personal Information tab is displayed.
+    Step 3  a) Verify all fields are blank.  b) Verify the Recaptcha box is displayed.
+
+Create new user
+    [Documentation]  This test case tests completing the required fields for creating a new user.
+    [Tags]  Manual
+    Step 1  a) In the First Name field, enter a first name.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Last Name field.
+    Step 2  a) In the Last Name field, enter a last name.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the State/Province field.
+    Step 3  a) In the State/Province field, enter "AZ".  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Country field.
+    Step 4  a) In the Country field, select United States.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Email field.
+    Step 5  a) In the Email field, enter a valid email address.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Company or Institution field.
+    Step 6  a) In the Company or Institution field, enter a company name.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Your Position field.
+    Step 7  a) In the Your Position field, enter a position.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Your Department field.
+    Step 8  a) In the Your Department field, enter a department name.  b) Click Save.  c) Verify the message "Please fill out this field" is displayed under the Username field.
+    Step 9  a) Replace the username with an invalid username:  A!  b) Click Save.  c) Verify the message, "Please match the required format" is displayed.  NOTE: Expected failure. Allowing invalid characters.
+    Step 10  a) Replace the username with an invalid username:  A  b) Click Save.  c) Verify the message, "Please match the required format" is displayed.
+    Step 11  a) Enter your existing username.  b) Click Save.  c) Verify you receive an error message that the username and/or email address is already in use.
+    Step 12  a) In the Username field, enter a valid user name.  Example: name-1  b) Verify the message "Please fill out this field" is displayed under the Password field.
+    Step 10  a) In the Password field, enter a valid password:  Example: iplant12!  b) Reenter the password.  c) Click Save.  d) Verify a message is displayed at the top of the window to enter the Recaptcha words.
+    Step 11  a) In the Recaptcha field, enter the words.  b) Click Save.  c) Verify you are redirected to a new page that displays "Thank you for registering." and instructions on verifying the new account.
+    Step 12  a) When you receive the verification email, click the link to verify the new account.  b) Save the file (Jabot File > Save).
+
