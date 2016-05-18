@@ -9,7 +9,7 @@ fi
 
 
 # Change to the directory where testsuites are stored
-cd $HOME/trunk/Trellis
+cd $HOME/trunk/Trellis-QA
 
 
 # Verify that output and downloads directories exist, create if they don't, clean out if they do
@@ -21,13 +21,13 @@ fi
 
 
 ##  Checkout the code for a specific branch based on environment running in
-cd $HOME/trunk/Trellis
+cd $HOME/trunk/Trellis-QA
 git checkout master
 git pull
 
 
 #  Verify that vars file is available
-if [ ! -r $HOME/trunk/TrellisTestVars.txt ]; then
+if [ ! -r $HOME/trunk/TrellisVars.txt ]; then
 	echo "**********************************************"
 	echo "* * *  Missing TrellisTestVars.txt file  * * *"
 	exit
@@ -35,7 +35,7 @@ fi
 
 
 #  Run the cleanup and regression suites
-cd $HOME/trunk/Trellis
+cd $HOME/trunk/Trellis-QA
 pybot -A ../TrellisVars.txt --name API $Smoke -d $HOME/junk/RegressionTests_Trellis/ -o API-Output.xml -A Trellis_API_Tests.list
 pybot -A ../TrellisVars.txt --name FireFox $Smoke -d $HOME/junk/RegressionTests_Trellis/ --variable SShotBase:FireFox --variable Browser:ff -o FireFox-Output.xml -A Trellis_GUI_Tests.list
 pybot -A ../TrellisVars.txt --name Chrome $Smoke -d $HOME/junk/RegressionTests_Trellis/ --variable SShotBase:Chrome --variable Browser:chrome -o Chrome-Output.xml -A Trellis_GUI_Tests.list

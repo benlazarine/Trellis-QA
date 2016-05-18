@@ -160,33 +160,33 @@ Verify Forgotten Email Address help text
 Verify Contact Tab reminder
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Page Should Contain    Use the contact tab to the left,
+    Page Should Contain    Use the contact tab to the left
 
 Verify Email reminder
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Page Should Contain    Email: support@iplantcollaborative.org,
+    Page Should Contain    Email: support@cyverse.org
 
 Verify Email link
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Page Should Contain Link    support@iplantcollaborative.org
+    Page Should Contain Link    support@cyverse.org
 
 Verify Web Form reminder
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Page Should Contain    Web Form: http://www.iplantcollaborative.org/support.
+    Page Should Contain    Web Form: http://www.cyverse.org/support.
 
 Verify Web Form link
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Page Should Contain Link    http://www.iplantcollaborative.org/support
+    Page Should Contain Link    http://www.cyverse.org/support
 
 Open Web Form link
     [Tags]    GUI    smoke
     Switch Browser    ${BrowserAlias}
-    Click Link    http://www.iplantcollaborative.org/support
+    Click Link    http://www.cyverse.org/support
     Comment    Wait Until Page Contains    Submit an iPlant Core Services Support Request
-    Comment    Location Should Be    http://www.iplantcollaborative.org/forms/support
-    Wait Until Page Contains Element    link=Submit a Support Request
-    Location Should Be    http://www.iplantcollaborative.org/contact
+    Comment    Location Should Be    http://www.cyverse.org/contact
+    Wait Until Page Contains Element    link=Submit Feedback
+    Location Should Be    http://www.cyverse.org/contact
