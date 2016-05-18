@@ -10,9 +10,9 @@ Resource          ../Trellis_Vars.robot
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
     Should Not Contain    ${output}    "error": {
-    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
-    Should Contain    ${output}    "firstname": "Rob"
-    Should Contain    ${output}    "lastname": "Bovill"
+    Should Contain    ${output}    "email": "${User1EMail}"
+    Should Contain    ${output}    "firstname": "${User1First}"
+    Should Contain    ${output}    "lastname": "${User1Last}"
 
 /api/v2/services/iplant-data-store GET
     [Tags]    functional
@@ -21,6 +21,6 @@ Resource          ../Trellis_Vars.robot
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
     Should Not Contain    ${output}    "error": {
-    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
-    Should Contain    ${output}    "firstname": "Rob"
-    Should Contain    ${output}    "lastname": "Bovill"
+    Should Contain    ${output}    "email": "${User1EMail}"
+    Should Contain    ${output}    "firstname": "${User1First}"
+    Should Contain    ${output}    "lastname": "${User1Last}"

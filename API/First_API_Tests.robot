@@ -5,42 +5,42 @@ Resource          ../Trellis_Vars.robot
 *** Test Cases ***
 Search by Username
     [Tags]    functional
-    ${SearchValue} =    Set Variable    rbovill
+    ${SearchValue} =    Set Variable    ${User1UserName}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
     Should Not Contain    ${output}    "error": {
-    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
-    Should Contain    ${output}    "firstname": "Rob"
-    Should Contain    ${output}    "lastname": "Bovill"
+    Should Contain    ${output}    "email": "${User1EMail}"
+    Should Contain    ${output}    "firstname": "${User1First}"
+    Should Contain    ${output}    "lastname": "${User1Last}"
 
 Search by email
     [Tags]    functional
-    ${SearchValue} =    Set Variable    rbovill@iplantcollaborative.org
+    ${SearchValue} =    Set Variable    ${User1EMail}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/email/${SearchValue} | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
     Should Not Contain    ${output}    "error": {
-    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
-    Should Contain    ${output}    "firstname": "Rob"
-    Should Contain    ${output}    "lastname": "Bovill"
+    Should Contain    ${output}    "email": "${User1EMail}"
+    Should Contain    ${output}    "firstname": "${User1First}"
+    Should Contain    ${output}    "lastname": "${User1Last}"
 
 Search by Name - Single
     [Tags]    functional
-    ${SearchValue} =    Set Variable    bovill
+    ${SearchValue} =    Set Variable    ${User1Last}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/name/${SearchValue} | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
     Should Not Contain    ${output}    "error": {
-    Should Contain    ${output}    "email": "rbovill@iplantcollaborative.org"
-    Should Contain    ${output}    "firstname": "Rob"
-    Should Contain    ${output}    "lastname": "Bovill"
-    Should Contain    ${output}    "email": "rbovill+001@gmail.com"
-    Should Contain    ${output}    "firstname": "RobOOl"
+    Should Contain    ${output}    "email": "${User1EMail}"
+    Should Contain    ${output}    "firstname": "${User1First}"
+    Should Contain    ${output}    "lastname": "${User1Last}"
+    Should Contain    ${output}    "email": "${User2EMail}"
+    Should Contain    ${output}    "firstname": "${User2First}"
 
 Search by Name - Multipart Plus Sign
     [Tags]    functional
-    ${SearchValue} =    Set Variable    rob+bovill
+    ${SearchValue} =    Set Variable    ${User1First}+${User1Last}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
@@ -48,12 +48,12 @@ Search by Name - Multipart Plus Sign
     ${LineCount} =    Run    echo '${output}' | wc -l
     Log    ${LineCount}
     Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
-    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
-    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+    Should Not Contain    ${output}    "email": "${User3EMail}"
+    Should Not Contain    ${output}    "email": "${User4EMail}"
 
 Search by Name - Multipart Space URL Encoded
     [Tags]    functional
-    ${SearchValue} =    Set Variable    rob%20bovill
+    ${SearchValue} =    Set Variable    ${User1First}%20${User1Last}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
@@ -61,12 +61,12 @@ Search by Name - Multipart Space URL Encoded
     ${LineCount} =    Run    echo '${output}' | wc -l
     Log    ${LineCount}
     Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
-    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
-    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+    Should Not Contain    ${output}    "email": "${User3EMail}"
+    Should Not Contain    ${output}    "email": "${User4EMail}"
 
 Search by Name - Multipart Actual Space
     [Tags]    functional    skipped
-    ${SearchValue} =    Set Variable    rob bovill
+    ${SearchValue} =    Set Variable    ${User1First} ${User1Last}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} 'https://${WebHost}/api/v1/users/name/${SearchValue}' | python -mjson.tool
     Log    ${output}
     Should Not Contain    ${output}    "Auth": "Unrecognized API Client"
@@ -74,8 +74,8 @@ Search by Name - Multipart Actual Space
     ${LineCount} =    Run    echo '${output}' | wc -l
     Log    ${LineCount}
     Run Keyword If    ${LineCount} > 23    Fail    Got back too many matches
-    Should Not Contain    ${output}    "email": "tobias_robinson@yahoo.com"
-    Should Not Contain    ${output}    "email": "robe0837@umn.edu"
+    Should Not Contain    ${output}    "email": "${User3EMail}"
+    Should Not Contain    ${output}    "email": "${User4EMail}"
 
 Search by email - 2 char
     [Tags]    functional
@@ -129,7 +129,7 @@ Method Not Supported
     ...    {"error: {"HTTP": "Method not supported; only GET requests are accepted"}}
     [Tags]    functional
     ${MethodName} =    Set Variable    FooBar
-    ${SearchValue} =    Set Variable    rbovill
+    ${SearchValue} =    Set Variable    ${User1UserName}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/${MethodName}/username/${SearchValue}
     Log    ${output}
     Should Contain    ${output}    We are sorry, but something went terribly wrong: No route found for "GET /api/v1/FooBar/username/rbovill"
@@ -137,7 +137,7 @@ Method Not Supported
 Authentication Error
     [Tags]    functional
     ${PubKey} =    Set Variable    9999999999
-    ${SearchValue} =    Set Variable    rbovill
+    ${SearchValue} =    Set Variable    ${User1UserName}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
     Log    ${output}
     Should Contain    ${output}    "error":
@@ -146,7 +146,7 @@ Authentication Error
 Invalid Secret Error
     [Tags]    functional
     ${PrivKey} =    Set Variable    9999999999
-    ${SearchValue} =    Set Variable    rbovill
+    ${SearchValue} =    Set Variable    ${User1UserName}
     ${output} =    Run    curl -s -u ${PubKey}:${PrivKey} https://${WebHost}/api/v1/users/username/${SearchValue} | python -mjson.tool
     Log    ${output}
     Should Contain    ${output}    "error":
